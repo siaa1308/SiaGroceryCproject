@@ -1,8 +1,15 @@
-#include <stdio.h>
-#include "grocery.h"
-
 int main() {
     int choice, apple_qty = 0, banana_qty = 0, orange_qty = 0, mango_qty = 0, pear_qty = 0;
+    struct Customer customer;
+
+    printf("Welcome to the Grocery Store Management System!\n");
+
+    // Input customer details
+    printf("Enter your name: ");
+    fgets(customer.name, sizeof(customer.name), stdin);
+    printf("Enter your phone number: ");
+    fgets(customer.phone_number, sizeof(customer.phone_number), stdin);
+    customer.customer_id = rand() % 1000 + 1; // Generate a random customer ID
 
     while (1) {
         printf("\n********** Grocery Store Management **********\n");
@@ -38,6 +45,9 @@ int main() {
             case 4:
                 printf("\n********** Your Bill **********\n");
                 displayBill(apple_qty, banana_qty, orange_qty, mango_qty, pear_qty);
+                printf("Customer ID: %d\n", customer.customer_id);
+                printf("Customer Name: %s", customer.name);
+                printf("Customer Phone Number: %s", customer.phone_number);
                 printf("Thank you for shopping with us!\n");
                 return 0;
             default:
