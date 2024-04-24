@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "grocery.h"
 
 int main() {
-    int choice, apple_qty = 0, banana_qty = 0, orange_qty = 0, mango_qty = 0, pear_qty = 0;
+    int choice;
+    Item *items = createItems();
+    Item *cart = malloc(sizeof(Item) * numItems);
 
     while (1) {
         printf("\n********** Grocery Store Management **********\n");
@@ -16,29 +20,34 @@ int main() {
         switch (choice) {
             case 1:
                 printf("\nAdd Items to Cart:\n");
-                printf("Enter quantity of Apples: ");
-                scanf("%d", &apple_qty);
-                printf("Enter quantity of Bananas: ");
-                scanf("%d", &banana_qty);
-                printf("Enter quantity of Oranges: ");
-                scanf("%d", &orange_qty);
-                printf("Enter quantity of Mangoes: ");
-                scanf("%d", &mango_qty);
-                printf("Enter quantity of Pears: ");
-                scanf("%d", &pear_qty);
+                char itemName[50];
+                int quantity;
+                printf("Enter item name: ");
+                scanf("%s", itemName);
+                printf("Enter quantity: ");
+                scanf("%d", &quantity);
+                Item *foundItem = findItemByName(items, numItems, itemName);
+                if (foundItem != NULL) {
+                    cart = addItemToCart(cart, numItems, items, itemName, quantity);
+                    printf("%d %s added to cart.\n", quantity, itemName);
+                } else {
+                    printf("Item not found.\n");
+                }
                 break;
             case 2:
                 printf("\nItems in Cart:\n");
-                viewItemsInCart(apple_qty, banana_qty, orange_qty, mango_qty, pear_qty);
+                viewItemsInCart(cart, numItems);
                 break;
             case 3:
                 printf("\nPrices of Items Available:\n");
-                viewPrices();
+                viewPrices(items, numItems);
                 break;
             case 4:
                 printf("\n********** Your Bill **********\n");
-                displayBill(apple_qty, banana_qty, orange_qty, mango_qty, pear_qty);
+                displayBill(cart, numItems);
                 printf("Thank you for shopping with us!\n");
+                freeItems(items);
+                free(cart);
                 return 0;
             default:
                 printf("Invalid choice. Please enter a number between 1 and 4.\n");
