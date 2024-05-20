@@ -1,27 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -std=c11
 
-grocery: main.o calculatePrice.o displayBill.o viewItemsInCart.o viewPrices.o createItems.o
-	$(CC) $(CFLAGS) -o grocery main.o calculatePrice.o displayBill.o viewItemsInCart.o viewPrices.o createItems.o
+SRCS = main.c printBill.c fileOperations.c itemOperations.c customerOperations.c
+OBJS = $(SRCS:.c=.o)
+EXEC = grocery_management_system
 
-main.o: main.c grocery.h
-	$(CC) $(CFLAGS) -c main.c
+.PHONY: all clean
 
-calculatePrice.o: calculatePrice.c grocery.h
-	$(CC) $(CFLAGS) -c calculatePrice.c
+all: $(EXEC)
 
-displayBill.o: displayBill.c grocery.h
-	$(CC) $(CFLAGS) -c displayBill.c
+$(EXEC): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@
 
-viewItemsInCart.o: viewItemsInCart.c grocery.h
-	$(CC) $(CFLAGS) -c viewItemsInCart.c
-
-viewPrices.o: viewPrices.c grocery.h
-	$(CC) $(CFLAGS) -c viewPrices.c
-
-createItems.o: createItems.c grocery.h
-	$(CC) $(CFLAGS) -c createItems.c
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f grocery *.o
-
+	rm -f $(EXEC) $(OBJS)
