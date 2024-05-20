@@ -1,60 +1,74 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include "grocery.h"
+#include "printBill.h"
+#include "fileOperations.h"
+#include "itemOperations.h"
+#include "customerOperations.h"
 
 int main() {
-    int choice;
-    Item *items = createItems();
-    Item *cart = malloc(sizeof(Item) * numItems);
+    struct Customer customer;
+    int choice, itemIndex, quantity;
+    float totalPrice;
+    char searchName[20];
+    struct Item *items;
+    int itemCount;
+
+    // Load items from file
+    loadItemsFromFile(&items, &itemCount);
+
+    // User login
+    if (!login(&customer)) {
+        printf("Login failed!\n");
+        return 1;
+    }
 
     while (1) {
-        printf("\n********** Grocery Store Management **********\n");
-        printf("1. Add Items to Cart\n");
-        printf("2. View Items in Cart\n");
-        printf("3. View Prices of Items Available\n");
-        printf("4. Generate Bill and Exit\n");
+        printf("\n1. Display Items\n");
+        printf("2. Add Item to Cart\n");
+        printf("3. View Cart\n");
+        printf("4. Checkout\n");
+        printf("5. Search Item\n");
+        printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                printf("\nAdd Items to Cart:\n");
-                char itemName[50];
-                int quantity;
-                printf("Enter item name: ");
-                scanf("%s", itemName);
-                printf("Enter quantity: ");
-                scanf("%d", &quantity);
-                Item *foundItem = findItemByName(items, numItems, itemName);
-                if (foundItem != NULL) {
-                    cart = addItemToCart(cart, numItems, items, itemName, quantity);
-                    printf("%d %s added to cart.\n", quantity, itemName);
-                } else {
-                    printf("Item not found.\n");
-                }
+                displayItems(items, itemCount);
                 break;
             case 2:
-                printf("\nItems in Cart:\n");
-                viewItemsInCart(cart, numItems);
+                displayItems(items, itemCount);
+                printf("Enter item number to add to cart: ");
+                scanf("%d", &itemIndex);
+                printf("Enter quantity: ");
+                scanf("%d", &quantity);
+                addItemToCart(&customer, items, itemIndex - 1, quantity);
                 break;
             case 3:
-                printf("\nPrices of Items Available:\n");
-                viewPrices(items, numItems);
+                displayCart(&customer);
                 break;
             case 4:
-                printf("\n********** Your Bill **********\n");
-                displayBill(cart, numItems);
-                printf("Thank you for shopping with us!\n");
-                freeItems(items);
-                free(cart);
+                displayCart(&customer);
+                totalPrice = calculateTotal(&customer);
+                printf("Total Price: Rs. %.2f\n", totalPrice);
+                printBill(&customer);
+                saveCustomerData(&customer);
+                free(customer.cart);  // Free dynamically allocated memory
+                free(items);          // Free dynamically allocated memory
+                return 0;
+            case 5:
+                printf("Enter item name to search: ");
+                scanf("%s", searchName);
+                searchItemByName(items, itemCount, searchName);
+                break;
+            case 6:
+                printf("Exiting the program.\n");
+                free(customer.cart);  // Free dynamically allocated memory
+                free(items);          // Free dynamically allocated memory
                 return 0;
             default:
-                printf("Invalid choice. Please enter a number between 1 and 4.\n");
+                printf("Invalid choice. Please try again.\n");
         }
     }
-
     return 0;
 }
-
-   
