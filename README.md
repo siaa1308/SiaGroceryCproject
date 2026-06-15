@@ -45,31 +45,7 @@ itemOperations.c Inventory management
 fileOperations.c File handling and storage
 printBill.c	Bill generation
 
-
-📁 Project Structure
-
-grocery/
-│
-├── Makefile
-│
-├── main.c
-│
-├── customerOperations.c
-├── customerOperations.h
-│
-├── itemOperations.c
-├── itemOperations.h
-│
-├── fileOperations.c
-├── fileOperations.h
-│
-├── printBill.c
-├── printBill.h
-│
-├── customers.csv
-└── items.csv
-
-🏗️ Build Instructions
+## 🏗️ Build Instructions
 
 Compile the project:
 make
@@ -85,7 +61,7 @@ make clean
 The project is compiled using: gcc
 
 
-⭐ Why This Project?
+## ⭐ Why This Project?
 
 This project was developed to strengthen understanding of:
 
