@@ -1,11 +1,13 @@
-🛒 Grocery Store Management System
+# 🛒 Grocery Store Management System
 
 A command-line Grocery Store Management System built in C that simulates real-world retail operations including inventory management, customer management, billing, and persistent data storage using CSV files.
 
 The project demonstrates software engineering principles such as modular programming, file handling, data management, and build automation using Makefiles.
 
-📋 Features
+# 📋 Features
+
 👥 Customer Management
+
 Add new customers
 Store customer records
 Retrieve customer information
