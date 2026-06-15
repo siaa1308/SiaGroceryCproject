@@ -12,31 +12,38 @@ Add new customers
 Store customer records
 Retrieve customer information
 Persistent customer data storage using CSV files
+
 📦 Inventory Management
+
 Add grocery items
 Update item information
 Manage stock quantities
 View available inventory
 Store inventory data in CSV format
+
 🧾 Billing System
+
 Generate customer bills
 Calculate purchase totals
 Display transaction details
 Produce formatted receipts
+
 💾 Data Persistence
+
 Customer records stored in customers.csv
 Inventory records stored in items.csv
 Data retained between program executions
+
 ⚙️ Modular Design
 
 The application is split into multiple modules:
 
-Module	-> Responsibility
-main.c	-> Program entry point
-customerOperations.c -> Customer management
-itemOperations.c -> Inventory management
-fileOperations.c	-> File handling and storage
-printBill.c	-> Bill generation
+Module Responsibility
+main.c Program entry point
+customerOperations.c Customer management
+itemOperations.c Inventory management
+fileOperations.c File handling and storage
+printBill.c	Bill generation
 
 
 📁 Project Structure
